@@ -7,6 +7,12 @@ variable "env" {
   default = "dev"
 }
 
+variable "app_name" {
+  type    = string
+  default = "WebApache"
+}
+
+
 ####################################################################
 # On recherche la derniere AMI créée avec le TAG PackerAnsible-Apache
 data "aws_ami" "WebApache" {
@@ -18,7 +24,7 @@ data "aws_ami" "WebApache" {
   }
   filter {
     name   = "tag:Name"
-    values = ["PackerAnsible-Apache"]
+    values = ["${var.env}-${var.app_name}-AMI"]
   }
   most_recent = true
 }
