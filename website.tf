@@ -2,13 +2,6 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-terraform {
-  backend "s3" {
-    bucket = "tp-devops-efrei"
-    key    = "${var.app_name}/${var.env}/DeployWebApp"
-  }
-}
-
 variable "env" {
   type    = string
   default = "dev"
