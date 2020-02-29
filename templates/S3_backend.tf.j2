@@ -1,0 +1,7 @@
+terraform {
+  backend "s3" {
+    bucket = "tp-devops-efrei"
+    key    = "{{ app_name }}/{{ env }}/DeployWebApp.tfstate"
+    region = "eu-west-1"
+  }
+}
