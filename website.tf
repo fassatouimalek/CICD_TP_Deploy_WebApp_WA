@@ -237,7 +237,7 @@ resource "aws_cloudwatch_metric_alarm" "web-cpu-alarm-scaledown" {
   alarm_actions   = [aws_autoscaling_policy.web-cpu-policy-scaledown.arn]
 }
 
-output "elb_dns_name" {
+output "selected_ami_id" {
   description = "Selected AMI id"
   value       = data.aws_ami.WebApache.id
 }
