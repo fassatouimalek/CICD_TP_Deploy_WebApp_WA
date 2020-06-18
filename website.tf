@@ -238,6 +238,11 @@ resource "aws_cloudwatch_metric_alarm" "web-cpu-alarm-scaledown" {
 }
 
 output "elb_dns_name" {
+  description = "Selected AMI id"
+  value       = data.aws_ami.WebApache.id
+}
+
+output "elb_dns_name" {
   description = "The DNS name of the ELB"
   value       = aws_elb.web-elb.dns_name
 }
