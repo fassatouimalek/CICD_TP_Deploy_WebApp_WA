@@ -128,9 +128,6 @@ resource "aws_launch_configuration" "web-lc" {
   instance_type = "t2.micro"
   #  key_name = ""  # Si vous voulez utiliser une KeyPair pour vous connecter aux instances
   security_groups = [aws_security_group.web-sg-asg.id]
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 
