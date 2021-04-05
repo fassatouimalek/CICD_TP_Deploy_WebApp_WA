@@ -137,7 +137,7 @@ resource "aws_launch_configuration" "web-lc" {
 resource "aws_autoscaling_group" "web-asg" {
   name                 = aws_launch_configuration.web-lc.name
   launch_configuration = aws_launch_configuration.web-lc.id
-  availability_zones   = data.aws_availability_zones.all.names
+  # availability_zones   = data.aws_availability_zones.all.names
   vpc_zone_identifier  = [data.aws_subnet.subnet-private-1.id, data.aws_subnet.subnet-private-2.id, data.aws_subnet.subnet-private-3.id]
   load_balancers       = [aws_elb.web-elb.name]
   health_check_type    = "ELB"
