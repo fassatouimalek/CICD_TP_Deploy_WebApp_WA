@@ -1,0 +1,52 @@
+pipeline {
+   agent any
+    environment {
+        GitBranch = "master"
+        StateBucketName = "bucket=devops-efrei"
+    }
+    
+   stages {
+        stage('Clean Jenkins Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        
+        stage('check Vars') {
+            steps {
+                sh "echo check first if vars are compliant"
+                    
+            }
+        }
+        
+        stage('checkout git') {
+            steps {
+                sh "pwd"
+                dir("Deploy_WebApp") {
+                    sh "pwd"
+                    git(
+                        url: 'https://github.com/KarimDevOps/CICD_TP_Deploy_WebApp.git',
+                        credentialsId: '8ac5a81f-69f0-4aac-9970-51d3ab23f40f',
+                        branch: "${GitBranch}"
+                    )
+                    sh "ls"
+                }
+            }
+        }
+        
+        stage('Deploy WebApp') {
+            steps {
+                dir("Deploy_WebApp") {
+                    sh "terraform --version"
+                    sh "pwd"
+                    sh "ls"
+
+                    wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+                        sh "terraform init -backend-config='$StateBucketName' -backend-config='key=$APP_NAME/$ENV/app.tfstate' -backend-config='region=eu-west-1'"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+    }
+}
